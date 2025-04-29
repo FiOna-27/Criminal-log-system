@@ -1,0 +1,325 @@
+@charset "UTF-8";
+/* Agent Profile Specific Styles */
+.profile-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid var(--blood-red);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+    position: relative;
+}
+
+.profile-header {
+    border-bottom: 1px solid var(--blood-red);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.profile-header::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--cobweb), transparent);
+}
+
+.glitch-title {
+    color: var(--blood-red);
+    font-size: 2rem;
+    text-shadow: 0 0 5px var(--flicker-glow);
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.clearance-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Courier New', monospace;
+    color: #666;
+}
+
+.clearance-level {
+    border: 1px solid var(--blood-red);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+}
+
+.clearance-code {
+    color: var(--blood-red);
+    letter-spacing: 2px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.profile-section {
+    background: rgba(20, 20, 20, 0.5);
+    padding: 1.5rem;
+    border: 1px solid var(--cobweb);
+    border-left: 3px solid var(--blood-red);
+    margin-bottom: 2rem;
+}
+
+.profile-section.full-width {
+    grid-column: 1 / -1;
+}
+
+.section-title {
+    color: var(--blood-red);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    border-bottom: 1px dashed var(--cobweb);
+    padding-bottom: 0.5rem;
+}
+
+/* Identity Section */
+.identity-section {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 1.5rem;
+}
+
+.id-photo {
+    width: 150px;
+    height: 200px;
+    background: #111;
+    border: 1px solid var(--blood-red);
+    position: relative;
+    overflow: hidden;
+}
+
+.id-photo::before {
+    content: "CLASSIFIED";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    color: var(--blood-red);
+    font-size: 1.2rem;
+    opacity: 0.5;
+    letter-spacing: 3px;
+}
+
+.info-row {
+    margin-bottom: 1rem;
+    display: flex;
+    border-bottom: 1px dotted #333;
+    padding-bottom: 0.5rem;
+}
+
+.info-label {
+    width: 120px;
+    color: #666;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.info-value {
+    flex: 1;
+    font-weight: bold;
+}
+
+.info-value.active {
+    color: #0f0;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+/* Vitals Grid */
+.vitals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.vital-card {
+    padding: 1rem;
+    border: 1px solid var(--cobweb);
+    position: relative;
+}
+
+.vital-card.warning {
+    border-color: #ff0;
+}
+
+.vital-card.danger {
+    border-color: var(--blood-red);
+}
+
+.vital-name {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.vital-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.vital-unit {
+    font-size: 1rem;
+    color: #666;
+}
+
+.vital-graph {
+    height: 10px;
+    background: #111;
+    margin-top: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.vital-graph::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--blood-red);
+}
+
+.neural-graph::after { width: 87%; }
+.psi-graph::after { width: 23%; background: #f00; }
+.mission-graph::after { width: 94%; background: #0f0; }
+.memory-graph::after { width: 12%; background: #ff0; }
+
+/* Activity Log */
+.activity-log {
+    font-family: 'Courier New', monospace;
+}
+
+.log-entry {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #333;
+    display: flex;
+    align-items: center;
+}
+
+.log-entry.warning {
+    color: #ff0;
+}
+
+.log-entry.danger {
+    color: var(--blood-red);
+}
+
+.log-time {
+    color: #666;
+    margin-right: 1rem;
+    min-width: 80px;
+}
+
+.log-location {
+    margin-left: auto;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Equipment Grid */
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.equipment-card {
+    padding: 1rem;
+    border: 1px solid var(--cobweb);
+    text-align: center;
+}
+
+.equipment-card.danger {
+    border-color: var(--blood-red);
+}
+
+.equip-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.equip-name {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.equip-status {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.equip-status.active {
+    color: #0f0;
+}
+
+/* Psych Notes */
+.psych-notes {
+    font-family: 'Courier New', monospace;
+}
+
+.note {
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--cobweb);
+}
+
+.note.warning {
+    border-left-color: #ff0;
+    color: #ff0;
+}
+
+.note.redacted {
+    background: #111;
+    color: transparent;
+    text-shadow: 0 0 8px rgba(139, 0, 0, 0.3);
+    padding: 0.2rem 0.5rem;
+}
+
+/* Edit Mode Styles */
+.info-value-edit {
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px solid var(--blood-red);
+    color: white;
+    font-family: 'Courier New', monospace;
+    padding: 0.3rem;
+    width: 100%;
+}
+
+.activity-notes {
+    width: 100%;
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px solid var(--blood-red);
+    color: white;
+    font-family: 'Courier New', monospace;
+    padding: 0.5rem;
+    min-height: 100px;
+}
+
+/* Status Colors */
+.info-value.active {
+    color: #0f0;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+.info-value.inactive {
+    color: #ff0;
+}
+
+.info-value.mia {
+    color: #f00;
+    animation: pulse 1s infinite;
+}
+
+/* Edit Transition */
+.static-info, .edit-form {
+    transition: all 0.3s ease;
+}

@@ -1,0 +1,326 @@
+@charset "UTF-8";
+
+/* ===== ROOT VARIABLES ===== */
+:root {
+    --form-width: 350px;
+    --blood-red: #8b0000;
+    --flicker-glow: #5a0000;
+    --dark-bg: #0a0a0a;
+    --cobweb: #333;
+}
+
+/* ===== BASE STYLES ===== */
+body {
+    background: var(--dark-bg);
+    font-family: 'Courier New', monospace;
+    color: white;
+    margin: 0;
+    padding: 0;
+    background-image: 
+        radial-gradient(circle at 10% 20%, var(--cobweb) 1px, transparent 1px),
+        radial-gradient(circle at 90% 80%, var(--cobweb) 1px, transparent 1px);
+    background-size: 30px 30px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1 {
+    color: var(--blood-red);
+    text-shadow: 0 0 5px var(--flicker-glow);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--blood-red);
+    width: 16ch;
+    opacity: 0;
+    animation: 
+        fadeIn 0.1s 2.1s forwards,
+        typing 3.5s 2.1s steps(14, end) forwards,
+        blink-caret 0.75s 2.1s step-end infinite,
+        flicker 3s 2.1s infinite alternate;
+}
+
+/* ===== FORM STYLES ===== */
+.form-container {
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid var(--blood-red);
+    border-radius: 5px;
+    border-left: 3px solid var(--blood-red);
+    padding: 2rem;
+    width: 400px;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, 
+        transparent 45%, 
+        var(--blood-red) 45%, 
+        var(--blood-red) 55%, 
+        transparent 55%);
+    background-size: 10px 10px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px solid var(--blood-red);
+    color: white;
+    font-family: 'Courier New', monospace;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+}
+
+button {
+    background: var(--blood-red);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+button:hover {
+    background: #ff0000;
+    transform: scale(1.02);
+}
+
+/* ===== SPECIAL ELEMENTS ===== */
+.raven-image {
+    position: absolute;
+    width: 120px;
+    top: 10%;
+    right: 10%;
+    opacity: 0;
+    transition: opacity 0.5s;
+    filter: brightness(0) drop-shadow(0 0 5px rgba(139, 0, 0, 0.7));
+}
+
+.access-denied {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    opacity: 0;
+    pointer-events: none;
+    animation: flash-denied 10s infinite;
+    z-index: 1000;
+}
+
+.entry-curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 3s ease-in forwards;
+}
+
+.entry-message {
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+.entry-message h2 {
+    color: var(--blood-red);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+/* ===== LOGIN PROMPT ===== */
+.login-prompt {
+    margin: 1.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.whisper {
+    color: #666;
+    font-style: italic;
+    text-shadow: 0 0 2px #000;
+}
+
+.login-prompt .whisper {
+    color: #5a5a5a;
+    font-style: italic;
+    text-shadow: 0 0 3px #000;
+}
+
+/* ===== BLOOD LINK (PURPLE LINK FIX) ===== */
+a.blood-link,
+a.blood-link:link,
+a.blood-link:visited,
+a.blood-link:hover,
+a.blood-link:active {
+    color: var(--blood-red) !important;
+    text-decoration: none !important;
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+a.blood-link::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0;
+    bottom: -3px;
+    left: 0;
+    background: linear-gradient(to bottom, #ff0000, #8b0000);
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+    transition: height 0.4s ease;
+    z-index: -1;
+}
+
+a.blood-link:hover {
+    color: #fff !important;
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000;
+}
+
+a.blood-link:hover::before {
+    height: 6px;
+}
+
+/* ===== MISC COMPONENTS ===== */
+#enter-button {
+    background: black;
+    color: var(--blood-red);
+    border: 2px solid var(--blood-red);
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#enter-button:hover {
+    background: var(--blood-red);
+    color: black;
+    transform: scale(1.1);
+}
+
+.disclaimer {
+    font-size: 0.7rem;
+    color: #555;
+    text-align: center;
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+.error-message {
+    color: #ff4444;
+    background: rgba(139, 0, 0, 0.2);
+    padding: 10px;
+    border-left: 3px solid var(--blood-red);
+    margin: 0 0 20px 0;
+    animation: pulse 1s infinite alternate;
+}
+
+.dashboard-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid var(--blood-red);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 16ch }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--blood-red) }
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 
+            0 0 5px var(--blood-red),
+            0 0 10px var(--flicker-glow),
+            0 0 20px #ff0000;
+    }
+    20%, 24%, 55% {
+        text-shadow: none;
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0; transform: scale(1); }
+    50% { opacity: 0.7; }
+    100% { opacity: 0; transform: scale(1.05); }
+}
+
+@keyframes flash-denied {
+    0%, 96%, 100% { opacity: 0; }
+    97%, 99% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.user-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: right;
+}
+
+.agent-name {
+    color: var(--blood-red);
+    font-weight: bold;
+}
+
+.clearance {
+    display: block;
+    font-size: 0.8rem;
+}
+
+.logout-link {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.logout-link:hover {
+    color: var(--blood-red);
+    text-decoration: underline;
+}

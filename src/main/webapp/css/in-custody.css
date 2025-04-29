@@ -1,0 +1,201 @@
+@charset "UTF-8";
+
+/* Incarceration Database Styles */
+.containment-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid var(--blood-red);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+}
+
+.containment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--blood-red);
+    padding-bottom: 1rem;
+}
+
+.containment-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.blood-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--blood-red);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-box input {
+    padding: 0.5rem;
+    border: 1px solid var(--blood-red);
+    border-radius: 5px;
+    background: rgba(10, 10, 10, 0.8);
+    color: white;
+}
+
+.search-box .search-icon {
+    color: var(--blood-red);
+}
+
+/* Prisoner Table */
+.prisoner-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', monospace;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 80px 150px 1fr 120px 120px 120px 150px;
+    background: rgba(139, 0, 0, 0.2);
+    border-bottom: 1px solid var(--blood-red);
+}
+
+.header-cell {
+    padding: 1rem;
+    font-weight: bold;
+    color: var(--blood-red);
+    text-align: center;
+}
+
+.table-body {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 80px 150px 1fr 120px 120px 120px 150px;
+    border-bottom: 1px dashed #333;
+    transition: all 0.3s;
+}
+
+.table-row:hover {
+    background: rgba(139, 0, 0, 0.1);
+}
+
+.table-cell {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Name Styling */
+.prisoner-name {
+    font-weight: bold;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.danger-tag {
+    margin-left: 0.5rem;
+    color: #f00;
+    animation: pulse 2s infinite;
+}
+
+/* Behavior Indicators */
+.behavior-indicator {
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.behavior-indicator.cooperative {
+    background: rgba(0, 255, 0, 0.1);
+    color: #0f0;
+}
+
+.behavior-indicator.uncooperative {
+    background: rgba(255, 255, 0, 0.1);
+    color: #ff0;
+}
+
+.behavior-indicator.violent {
+    background: rgba(255, 0, 0, 0.1);
+    color: #f00;
+    animation: pulse 2s infinite;
+}
+
+/* Mental State Indicators */
+.mental-state {
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+}
+
+.mental-state.stable {
+    color: #0f0;
+}
+
+.mental-state.unstable {
+    color: #ff0;
+}
+
+.mental-state.dangerous {
+    color: #f00;
+    animation: pulse 1.5s infinite;
+}
+
+/* Actions */
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--blood-red);
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.action-btn:hover {
+    background-color: darkred;
+}
+
+/* Responsive Table */
+@media (max-width: 1200px) {
+    .table-header {
+        display: none;
+    }
+    
+    .table-row {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        border: 1px solid var(--cobweb);
+        margin-bottom: 1rem;
+    }
+    
+    .table-cell::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--blood-red);
+        margin-right: 0.5rem;
+        min-width: 120px;
+        display: inline-block;
+    }
+    
+    .actions-cell {
+        justify-content: flex-end;
+    }
+}

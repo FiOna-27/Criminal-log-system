@@ -1,0 +1,281 @@
+@charset "UTF-8";
+/* Login-specific styles */
+
+.login-container {
+    width: 380px; /* Increased from 320px */
+    background: rgba(10, 10, 10, 0.9);
+    border-left: 3px solid var(--blood-red);
+    padding: 2.5rem; /* More padding */
+    position: relative;
+    margin: 0 auto; /* Center horizontally */
+}
+
+.login-container::before {
+    content: "SECURITY CLEARANCE REQUIRED";
+    position: absolute;
+    top: -25px;
+    left: -3px;
+    color: var(--blood-red);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.login-title {
+    color: var(--blood-red);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+    letter-spacing: 1px;
+    
+}
+
+.input-group {
+    margin: 1.8rem 0;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.eye-toggle {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    cursor: pointer;
+    filter: grayscale(1) brightness(2);
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+.eye-toggle:hover {
+    opacity: 1;
+    filter: none;
+}
+
+#login-btn {
+    position: relative;
+    overflow: hidden;
+    background: #111;
+    border: 1px solid #8b0000;
+}
+
+.btn-text, .btn-glitch {
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.btn-glitch {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    color: #0f0;
+    opacity: 0;
+}
+
+/* Add to your existing login.css */
+.error-message {
+    color: #ff4444;
+    background: rgba(139, 0, 0, 0.2);
+    padding: 10px;
+    border-left: 3px solid var(--blood-red);
+    margin-bottom: 20px;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+.login-container {
+    width: 400px;
+    background: rgba(0, 0, 0, 0.85);
+    border-left: 3px solid var(--blood-red);
+    padding: 2.5rem;
+    position: relative;
+}
+
+.login-container::before {
+    content: "SECURITY CLEARANCE REQUIRED";
+    position: absolute;
+    top: -25px;
+    left: -3px;
+    color: var(--blood-red);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.text-flicker {
+    animation: text-flicker 3s infinite;
+}
+
+@keyframes text-flicker {
+    0%, 19%, 21%, 63%, 65%, 81%, 100% { opacity: 1; }
+    20%, 64%, 80% { opacity: 0.3; }
+}
+
+#login-btn:hover .btn-text {
+    opacity: 0;
+}
+
+#login-btn:hover .btn-glitch {
+    opacity: 1;
+    animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translateX(-2px); }
+    25% { transform: translateX(2px); }
+    50% { transform: translateX(-1px); }
+    75% { transform: translateX(1px); }
+    100% { transform: translateX(0); }
+}
+
+.text-flicker {
+    animation: text-flicker 3s infinite;
+}
+
+@keyframes text-flicker {
+    0%, 19%, 21%, 63%, 65%, 81%, 100% { opacity: 1; }
+    20%, 64%, 80% { opacity: 0.3; }
+}
+
+/* Responsive tweak for mobile */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+}
+
+/* Registration link styles */
+.registration-prompt {
+    margin: 1.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.registration-prompt .whisper {
+    color: #5a5a5a;
+    font-style: italic;
+    text-shadow: 0 0 3px #000;
+}
+
+.blood-link {
+    color: var(--blood-red);
+    text-decoration: none;
+    margin-left: 0.5rem;
+    font-weight: bold;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.blood-link:hover {
+    color: #ff0000;
+    text-shadow: 0 0 8px #ff0000;
+}
+
+/* Animated blood underline */
+.blood-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background: #ff0000;
+    transition: width 0.3s ease;
+}
+
+.blood-link:hover::after {
+    width: 100%;
+}
+
+/* Classified Link Effect */
+.forgot-password {
+    text-align: right;
+    margin: -0.5rem 0 1rem 0;
+    font-size: 0.8rem;
+    position: relative;
+}
+
+.classified-link {
+    color: #444;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    display: inline-block;
+}
+
+.classified-block, 
+.classified-reveal {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+}
+
+.classified-reveal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--blood-red);
+    text-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+    pointer-events: none;
+}
+
+.classified-link:hover .classified-block {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+    letter-spacing: 2px;
+}
+
+.classified-link:hover .classified-reveal {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    animation: 
+        glitch-appear 0.3s forwards,
+        text-flicker 3s infinite;
+}
+
+@keyframes glitch-appear {
+    0% { 
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        opacity: 0;
+    }
+    20% {
+        clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%);
+        opacity: 0.3;
+    }
+    40% {
+        clip-path: polygon(0 20%, 100% 20%, 100% 80%, 0 80%);
+    }
+    60% {
+        clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+    }
+    80% {
+        clip-path: polygon(0 10%, 100% 10%, 100% 90%, 0 90%);
+    }
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        opacity: 1;
+    }
+}
+
+@keyframes text-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 5px var(--blood-red);
+    }
+    20%, 24%, 55% {
+        opacity: 0.8;
+        text-shadow: none;
+    }
+}
