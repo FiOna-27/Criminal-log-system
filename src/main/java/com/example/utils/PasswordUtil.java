@@ -7,13 +7,12 @@ public class PasswordUtil {
 
     public static String hashPassword(String password) {
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256"); // You can use SHA-512 too
+            MessageDigest md = MessageDigest.getInstance("SHA-256"); 
             byte[] hashedBytes = md.digest(password.getBytes());
 
-            // Convert to hex string
             StringBuilder sb = new StringBuilder();
             for (byte b : hashedBytes) {
-                sb.append(String.format("%02x", b)); // byte to hex
+                sb.append(String.format("%02x", b)); 
             }
             return sb.toString();
 

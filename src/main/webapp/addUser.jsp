@@ -8,12 +8,7 @@
     href="${pageContext.request.contextPath}/css/eerie.css"/>
 </head>
 <body>
-<div class="entry-curtain" id="entry-curtain">
-    <div class="entry-message">
-        <h2>AUTHORIZED PERSONNEL ONLY</h2>
-        <button id="enter-button">TRESSPASSERS WILL BE DEALT WITH</button>
-    </div>
-</div>
+
     <div class="access-denied">ACCESS DENIED</div>
     <img src="assets/images/raven.png" id="raven" class="raven-image">
     
@@ -28,8 +23,8 @@
             <button type="submit" id="submit-btn">ENTER THE SHADOWS</button>
         </form>
         
-        <!-- Added login link with eerie styling -->
-        <div class="login-prompt">  <!-- Changed class name -->
+       
+        <div class="login-prompt">  
 		    <span class="whisper">Already initiated?</span>
 		    <a href="login.jsp" class="blood-link"><span>Prove your identity</span></a>
 		</div>

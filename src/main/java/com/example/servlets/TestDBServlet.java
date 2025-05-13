@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 
-@WebServlet("/coursework") // Careful: this is case-sensitive
+@WebServlet("/coursework") 
 public class TestDBServlet extends HttpServlet {
     /**
 	 * 

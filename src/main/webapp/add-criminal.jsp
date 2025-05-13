@@ -1,0 +1,192 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.example.models.Detective" %>
+<%
+    Detective detective = (Detective) session.getAttribute("detective");
+    if (detective == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Criminal | Shadow Files</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/eerie.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #ccc;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+        }
+
+        .classified-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--blood-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .classified-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--blood-red);
+            padding-bottom: 1rem;
+        }
+
+        .classified-header h1 {
+            color: var(--blood-red);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .classified-header::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 25%;
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--blood-red), transparent);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--blood-red);
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--cobweb);
+            color: #ccc;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--blood-red);
+            box-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .blood-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: rgba(139, 0, 0, 0.3);
+            border: 1px solid var(--blood-red);
+            color: #ccc;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+
+        .blood-button:hover {
+            background: rgba(139, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .signout-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: var(--blood-red);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--blood-red);
+            font-weight: bold;
+            text-decoration: none;
+            z-index: 1000;
+        }
+
+        .access-warning {
+            color: var(--blood-red);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 1;
+            }
+            20%, 22%, 24%, 55% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SIGN OUT BUTTON -->
+    <a href="LogoutServlet" class="signout-fixed">[SIGN OUT]</a>
+
+    <div class="classified-container">
+        <div class="classified-header">
+            <h1><span class="glitch" data-text="ADD CRIMINAL">ADD CRIMINAL</span> RECORD</h1>
+            <p>Detective: <span class="redacted"><%= detective.getLastName() %></span></p>
+        </div>
+
+        <form action="AddCriminalServlet" method="post">
+            <input type="hidden" name="criminalType" value="mostWanted">
+            
+            <div class="form-group">
+                <label for="name">FULL NAME:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="charges">CHARGES:</label>
+                <input type="text" id="charges" name="charges" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="lastSeen">LAST KNOWN LOCATION:</label>
+                <input type="text" id="lastSeen" name="lastSeen" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">CLASSIFIED DETAILS:</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+            </div>
+            
+            <button type="submit" class="blood-button">UPLOAD TO CRIMINAL DATABASE</button>
+            
+            <p class="access-warning">WARNING: UNAUTHORIZED ACCESS WILL BE PUNISHED</p>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('focus', () => {
+                element.style.boxShadow = '0 0 10px rgba(139, 0, 0, 0.7)';
+            });
+            element.addEventListener('blur', () => {
+                element.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

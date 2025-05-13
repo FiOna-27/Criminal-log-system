@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,44 +41,19 @@
         <section class="wanted-section" id="wanted">
             <h2>Most Wanted Criminals</h2>
             <div class="wanted-grid">
-                <!-- Criminal Profile 1 -->
-                <div class="criminal-card">
-                    <div class="criminal-img" style="background-image: url('${pageContext.request.contextPath}/assets/images/wanted1.jpg');">
-                        <span class="wanted-banner">WANTED</span>
+                <c:forEach var="criminal" items="${mostWantedList}">
+                    <div class="criminal-card">
+                        <div class="criminal-img" style="background-image: url('${pageContext.request.contextPath}/assets/images/wanted1.jpg');">
+                            <span class="wanted-banner">WANTED</span>
+                        </div>
+                        <div class="criminal-info">
+                            <h3>${criminal.name}</h3>
+                            <p><strong>Charges:</strong> ${criminal.charges}</p>
+                            <p><strong>Last Seen:</strong> ${criminal.lastSeen}</p>
+                            <button class="gov-btn">View Details</button>
+                        </div>
                     </div>
-                    <div class="criminal-info">
-                        <h3>Vincent "Viper" Moretti</h3>
-                        <p><strong>Charges:</strong> Racketeering, Fraud</p>
-                        <p><strong>Last Seen:</strong> New York City</p>
-                        <button class="gov-btn">View Details</button>
-                    </div>
-                </div>
-                
-                <!-- Criminal Profile 2 -->
-                <div class="criminal-card">
-                    <div class="criminal-img" style="background-image: url('${pageContext.request.contextPath}/assets/images/wanted2.jpg');">
-                        <span class="wanted-banner">WANTED</span>
-                    </div>
-                    <div class="criminal-info">
-                        <h3>Elena "Shadows" Vasquez</h3>
-                        <p><strong>Charges:</strong> Cyber Crimes, Identity Theft</p>
-                        <p><strong>Last Seen:</strong> Online Presence</p>
-                        <button class="gov-btn">View Details</button>
-                    </div>
-                </div>
-                
-                <!-- Criminal Profile 3 -->
-                <div class="criminal-card">
-                    <div class="criminal-img" style="background-image: url('${pageContext.request.contextPath}/assets/images/wanted3.jpg');">
-                        <span class="wanted-banner">WANTED</span>
-                    </div>
-                    <div class="criminal-info">
-                        <h3>Marcus "Ghost" Johnson</h3>
-                        <p><strong>Charges:</strong> Homicide, Evasion</p>
-                        <p><strong>Last Seen:</strong> Chicago Area</p>
-                        <button class="gov-btn">View Details</button>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
         </section>
 
@@ -129,7 +106,6 @@
         </div>
     </footer>
 
-    <!-- Hidden shadow files elements -->
     <div class="shadow-watermark">
         <img src="${pageContext.request.contextPath}/assets/images/shadow-files-watermark.png" alt="Shadow Files">
     </div>

@@ -40,7 +40,6 @@ if (request.getAttribute("error") != null) {
                 <span class="eye-toggle">👁</span>
             </div>
             
-            <!-- Forgot password link positioned under password field -->
             <div class="forgot-password">
 			    <a href="${pageContext.request.contextPath}/forgotpassword.jsp" class="classified-link">
 			        <span class="classified-block">████ ███████ ████?</span>
@@ -54,7 +53,6 @@ if (request.getAttribute("error") != null) {
             </button>
         </form>
         
-        <!-- Registration link -->
         <div class="registration-prompt">
             <span class="whisper">Not yet initiated?</span>
             <a href="${pageContext.request.contextPath}/addUser.jsp" class="blood-link">Request clearance</a>

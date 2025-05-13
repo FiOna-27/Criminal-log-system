@@ -9,10 +9,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-@WebFilter("/*") // Filters all requests
+@WebFilter("/*") 
 public class AuthFilter implements Filter {
     
-    // Define publicly accessible paths
     private static final Set<String> ALLOWED_PATHS = new HashSet<String>() {/**
 		 * 
 		 */
@@ -28,6 +27,10 @@ public class AuthFilter implements Filter {
         add("/assets/");
         add("/forgot-password.jsp");
         add("/public.jsp");
+        add("/display.jsp");
+        add("/DetectivePhotoServlet");
+        add("/PublicMostWantedServlet");
+        
     }};
 
     @Override
@@ -52,10 +55,8 @@ public class AuthFilter implements Filter {
         System.out.println("Path: " + path + " | Logged in: " + isLoggedIn);
         
         if (isLoggedIn || isAllowedPath) {
-            // User is authenticated or path is public
             chain.doFilter(request, response);
         } else {
-            // Redirect to login with "unauthorized" message
             System.out.println("Unauthorized access attempt to: " + path);
             request.setAttribute("error", "Please login to access this page");
             response.sendRedirect(request.getContextPath() + "/login.jsp");

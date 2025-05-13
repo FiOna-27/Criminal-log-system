@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-/* Incarceration Database Styles */
 .containment-container {
     max-width: 1400px;
     margin: 2rem auto;
@@ -51,7 +50,6 @@
     color: var(--blood-red);
 }
 
-/* Prisoner Table */
 .prisoner-table {
     width: 100%;
     border-collapse: collapse;
@@ -96,7 +94,6 @@
     text-align: center;
 }
 
-/* Name Styling */
 .prisoner-name {
     font-weight: bold;
     color: white;
@@ -109,7 +106,6 @@
     animation: pulse 2s infinite;
 }
 
-/* Behavior Indicators */
 .behavior-indicator {
     padding: 0.2rem 0.5rem;
     border-radius: 3px;
@@ -133,7 +129,6 @@
     animation: pulse 2s infinite;
 }
 
-/* Mental State Indicators */
 .mental-state {
     padding: 0.2rem 0.5rem;
     border-radius: 3px;
@@ -152,7 +147,6 @@
     animation: pulse 1.5s infinite;
 }
 
-/* Actions */
 .actions-cell {
     display: flex;
     gap: 0.5rem;
@@ -173,7 +167,6 @@
     background-color: darkred;
 }
 
-/* Responsive Table */
 @media (max-width: 1200px) {
     .table-header {
         display: none;

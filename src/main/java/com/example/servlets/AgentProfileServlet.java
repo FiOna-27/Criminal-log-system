@@ -22,12 +22,11 @@ public class AgentProfileServlet extends HttpServlet {
         Detective detective = (Detective) session.getAttribute("detective");
         
         if (detective == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("loginController.jsp");
             return;
         }
 
         try (Connection conn = DBUtil.getConnection()) {
-            // Get complete agent profile
             String sql = "SELECT * FROM detective WHERE Detective_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, detective.getId());
@@ -35,16 +34,13 @@ public class AgentProfileServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-                // Update detective object with full profile data
                 detective.setFirstName(rs.getString("FirstName"));
                 detective.setLastName(rs.getString("LastName"));
                 detective.setEmail(rs.getString("Email"));
                 detective.setNumber(rs.getString("Number"));
                 
-                // Store updated detective in session
                 session.setAttribute("detective", detective);
                 
-                // Forward to profile page
                 request.getRequestDispatcher("agent-profile.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Agent profile not found");

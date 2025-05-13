@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-/* Home Page Specific Styles */
 .home-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -135,7 +134,6 @@
     margin-right: 1rem;
 }
 
-/* Terminal Boot Sequence */
 .terminal-curtain {
     position: fixed;
     top: 0;

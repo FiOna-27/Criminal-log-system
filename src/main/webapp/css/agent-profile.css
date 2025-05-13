@@ -1,5 +1,4 @@
 @charset "UTF-8";
-/* Agent Profile Specific Styles */
 .profile-container {
     max-width: 1200px;
     margin: 2rem auto;
@@ -80,7 +79,6 @@
     padding-bottom: 0.5rem;
 }
 
-/* Identity Section */
 .identity-section {
     display: grid;
     grid-template-columns: 150px 1fr;
@@ -132,7 +130,6 @@
     text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
 }
 
-/* Vitals Grid */
 .vitals-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -192,7 +189,6 @@
 .mission-graph::after { width: 94%; background: #0f0; }
 .memory-graph::after { width: 12%; background: #ff0; }
 
-/* Activity Log */
 .activity-log {
     font-family: 'Courier New', monospace;
 }
@@ -225,7 +221,6 @@
     font-size: 0.8rem;
 }
 
-/* Equipment Grid */
 .equipment-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -261,7 +256,6 @@
     color: #0f0;
 }
 
-/* Psych Notes */
 .psych-notes {
     font-family: 'Courier New', monospace;
 }
@@ -284,7 +278,6 @@
     padding: 0.2rem 0.5rem;
 }
 
-/* Edit Mode Styles */
 .info-value-edit {
     background: rgba(20, 20, 20, 0.7);
     border: 1px solid var(--blood-red);
@@ -304,7 +297,6 @@
     min-height: 100px;
 }
 
-/* Status Colors */
 .info-value.active {
     color: #0f0;
     text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
@@ -319,7 +311,6 @@
     animation: pulse 1s infinite;
 }
 
-/* Edit Transition */
 .static-info, .edit-form {
     transition: all 0.3s ease;
 }

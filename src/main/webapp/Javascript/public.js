@@ -2,7 +2,6 @@
  * 
  */
 document.addEventListener('DOMContentLoaded', () => {
-    // Simple hover effect for wanted cards
     const wantedCards = document.querySelectorAll('.wanted-card');
     
     wantedCards.forEach(card => {

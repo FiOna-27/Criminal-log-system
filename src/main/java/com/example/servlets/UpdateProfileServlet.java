@@ -22,17 +22,16 @@ public class UpdateProfileServlet extends HttpServlet {
         Detective detective = (Detective) session.getAttribute("detective");
         
         if (detective == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("loginController.jsp");
             return;
         }
 
         try (Connection conn = DBUtil.getConnection()) {
-            // Get parameters from form
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
             
-            // Update database
+            
             String sql = "UPDATE detective SET FirstName=?, LastName=?, Email=?, Status=?, Specialty=? WHERE Detective_id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, firstName);
@@ -43,7 +42,6 @@ public class UpdateProfileServlet extends HttpServlet {
             int rowsAffected = stmt.executeUpdate();
             
             if (rowsAffected > 0) {
-                // Update session object
                 detective.setFirstName(firstName);
                 detective.setLastName(lastName);
                 detective.setEmail(email);

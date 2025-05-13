@@ -1,13 +1,13 @@
 @charset "UTF-8";
-/* Login-specific styles */
+
 
 .login-container {
-    width: 380px; /* Increased from 320px */
+    width: 380px; 
     background: rgba(10, 10, 10, 0.9);
     border-left: 3px solid var(--blood-red);
-    padding: 2.5rem; /* More padding */
+    padding: 2.5rem; 
     position: relative;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 auto; 
 }
 
 .login-container::before {

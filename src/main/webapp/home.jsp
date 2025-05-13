@@ -54,8 +54,8 @@
         </div>
     </div>
 
-    <!-- SIGN OUT BUTTON (Fixed to Bottom Right) -->
     <a href="LogoutServlet" class="signout-fixed">[SIGN OUT]</a>
+    
 
     <div class="home-container">
         <header class="classified-header">
@@ -65,7 +65,7 @@
 
         <nav class="main-nav">
             <div class="nav-item" data-sound="creak">
-                <a href="${pageContext.request.contextPath}/most-wanted.jsp" class="blood-link">
+                <a href="${pageContext.request.contextPath}/MostWantedServlet" class="blood-link">
                     MOST WANTED DATABASE
                     <span class="nav-icon">🕵️</span>
                     <span class="nav-text">ACTIVE CASES</span>
@@ -74,7 +74,7 @@
             </div>
             
             <div class="nav-item" data-sound="static">
-                <a href="${pageContext.request.contextPath}/in-custody.jsp" class="blood-link">
+                <a href="${pageContext.request.contextPath}/InCustodyServlet" class="blood-link">
                     <span class="nav-icon">📁</span>
                     <span class="nav-text">Prisoner Archive</span>
                     <span class="nav-glitch">RESTRICTED</span>

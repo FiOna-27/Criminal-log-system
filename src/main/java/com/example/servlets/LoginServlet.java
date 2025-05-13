@@ -21,11 +21,9 @@ public class LoginServlet extends HttpServlet {
 
         String emailInput = request.getParameter("email");
         String passwordInput = request.getParameter("password");
-     // Hash the incoming password
         String hashedInputPassword = PasswordUtil.hashPassword(passwordInput);
 
         try (Connection conn = DBUtil.getConnection()) {
-            // Enhanced query to get more user data
             String sql = "SELECT Detective_id, First_name, Last_name, Email FROM detective WHERE Email = ? AND Password = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, emailInput);
@@ -35,22 +33,18 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                // Create Detective object with user data
                 Detective detective = new Detective();
                 detective.setId(rs.getInt("Detective_id"));
                 detective.setFirstName(rs.getString("First_name"));
                 detective.setLastName(rs.getString("Last_name"));
                 detective.setEmail(rs.getString("Email"));
 
-                // Create session and store detective object
                 HttpSession session = request.getSession();
                 session.setAttribute("detective", detective);
 
-                // Log session creation
                 System.out.println("Session created for: " + detective.getEmail());
                 System.out.println("Session ID: " + session.getId());
 
-                // Redirect to home page
                 response.sendRedirect("home.jsp");
             } else {
                 System.out.println("Login failed - invalid credentials");

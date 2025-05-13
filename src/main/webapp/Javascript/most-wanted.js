@@ -1,163 +1,84 @@
-/**
- * 
- */
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
-    const addCriminalBtn = document.getElementById('add-criminal-btn');
-    const addCriminalModal = document.getElementById('add-criminal-modal');
-    const closeModalBtns = document.querySelectorAll('.close-modal');
-    const criminalForm = document.getElementById('criminal-form');
-    const criminalTable = document.querySelector('.table-body');
-    const detailsModal = document.getElementById('criminal-details-modal');
-    const creakSound = document.getElementById('creak');
-    const staticSound = document.getElementById('static');
-
-    // Initialize sounds
-    creakSound.volume = 0.3;
-    staticSound.volume = 0.2;
-
-    // Modal Controls
-    addCriminalBtn.addEventListener('click', () => {
-        addCriminalModal.style.display = 'block';
-        creakSound.currentTime = 0;
-        creakSound.play();
-    });
-
-    closeModalBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            addCriminalModal.style.display = 'none';
-            detailsModal.style.display = 'none';
-            creakSound.currentTime = 0;
-            creakSound.play();
+    const wantedCards = document.querySelectorAll('.wanted-card');
+    wantedCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 5px 15px rgba(139, 0, 0, 0.3)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            card.style.boxShadow = '';
         });
     });
+	        const searchInput = document.getElementById('searchInput');
+	        const suggestionsBox = document.getElementById('suggestions');
 
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-        if (e.target === addCriminalModal || e.target === detailsModal) {
-            addCriminalModal.style.display = 'none';
-            detailsModal.style.display = 'none';
-        }
-    });
+	        searchInput.addEventListener('keyup', function() {
+	            const keyword = this.value.trim();
 
-    // Form Submission
-    criminalForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const id = document.getElementById('criminal-id').value;
-        const name = document.getElementById('criminal-name').value;
-        const crimes = document.getElementById('criminal-crimes').value;
-        const danger = document.getElementById('criminal-danger').value;
-        
-        // Create new criminal row
-        const newRow = document.createElement('div');
-        newRow.className = `table-row ${danger}-threat`;
-        newRow.innerHTML = `
-            <div class="table-cell">${id}</div>
-            <div class="table-cell">${name}</div>
-            <div class="table-cell">${crimes}</div>
-            <div class="table-cell">
-                <span class="threat-level ${danger}">${danger.toUpperCase()}</span>
-            </div>
-            <div class="table-cell">[REDACTED]</div>
-            <div class="table-cell actions-cell">
-                <button class="action-btn view-btn">VIEW</button>
-                <button class="action-btn edit-btn">EDIT</button>
-                <button class="action-btn delete-btn">TERMINATE</button>
-            </div>
-        `;
-        
-        // Add to table
-        criminalTable.prepend(newRow);
-        
-        // Reset form and close modal
-        criminalForm.reset();
-        addCriminalModal.style.display = 'none';
-        
-        // Play sound
-        staticSound.currentTime = 0;
-        staticSound.play();
-        
-        // Add event listeners to new buttons
-        addRowEventListeners(newRow);
-    });
+	            if (keyword.length === 0) {
+	                suggestionsBox.style.display = 'none';
+	                return;
+	            }
 
-    // View Criminal Details
-    function showCriminalDetails(row) {
-        const cells = row.querySelectorAll('.table-cell');
-        const detailsContent = document.querySelector('.criminal-details');
-        
-        detailsContent.innerHTML = `
-            <div class="criminal-photo"></div>
-            <div class="criminal-info">
-                <div class="info-label">CASE ID:</div>
-                <div class="info-value">${cells[0].textContent}</div>
-                
-                <div class="info-label">ALIAS:</div>
-                <div class="info-value">${cells[1].textContent}</div>
-                
-                <div class="info-label">CRIMES:</div>
-                <div class="info-value">${cells[2].textContent}</div>
-                
-                <div class="info-label">THREAT LEVEL:</div>
-                <div class="info-value">${cells[3].innerHTML}</div>
-                
-                <div class="info-label">LAST SIGHTING:</div>
-                <div class="info-value">${cells[4].textContent}</div>
-                
-                <div class="info-label">STATUS:</div>
-                <div class="info-value active">ACTIVE</div>
-            </div>
-        `;
-        
-        detailsModal.style.display = 'block';
-    }
+	            fetch('${pageContext.request.contextPath}/SearchMostWantedServlet', {
+	                method: 'POST',
+	                headers: {
+	                    'Content-Type': 'application/x-www-form-urlencoded'
+	                },
+	                body: 'keyword=' + encodeURIComponent(keyword)
+	            })
+	            .then(response => response.text())
+	            .then(data => {
+	                suggestionsBox.innerHTML = '';
+	                if (data) {
+	                    const names = data.split(',');
+	                    names.forEach(name => {
+	                        if (name.trim() !== '') {
+	                            const li = document.createElement('li');
+	                            li.textContent = name;
+	                            li.addEventListener('click', () => {
+	                                searchInput.value = name;
+	                                suggestionsBox.style.display = 'none';
+	                            });
+	                            suggestionsBox.appendChild(li);
+	                        }
+	                    });
+	                    suggestionsBox.style.display = names.length > 0 ? 'block' : 'none';
+	                } else {
+	                    suggestionsBox.style.display = 'none';
+	                }
+	            })
+	            .catch(error => {
+	                console.error('Error fetching suggestions:', error);
+	                suggestionsBox.style.display = 'none';
+	            });
+	        });
 
-    // Add event listeners to table rows
-    function addRowEventListeners(row) {
-        const viewBtn = row.querySelector('.view-btn');
-        const editBtn = row.querySelector('.edit-btn');
-        const deleteBtn = row.querySelector('.delete-btn');
-        
-        viewBtn.addEventListener('click', () => {
-            showCriminalDetails(row);
-            creakSound.currentTime = 0;
-            creakSound.play();
-        });
-        
-        editBtn.addEventListener('click', () => {
-            // In a real app, this would populate the edit form
-            alert('Edit functionality would be implemented here');
-            staticSound.currentTime = 0;
-            staticSound.play();
-        });
-        
-        deleteBtn.addEventListener('click', () => {
-            if (confirm('Mark this criminal profile for termination?')) {
-                row.classList.add('terminated');
-                setTimeout(() => {
-                    row.remove();
-                }, 500);
-                staticSound.currentTime = 0;
-                staticSound.play();
-            }
-        });
-    }
+	        document.addEventListener('click', function(e) {
+	            if (e.target !== searchInput) {
+	                suggestionsBox.style.display = 'none';
+	            }
+	        });
 
-    // Initialize existing rows
-    document.querySelectorAll('.table-row').forEach(row => {
-        addRowEventListeners(row);
-    });
+	        document.getElementById('searchForm').addEventListener('submit', function(e) {
+	            if (searchInput.value.trim() === '') {
+	                e.preventDefault();
+	            }
+	        });
 
-    // Random raven appearance
-    setInterval(() => {
-        if (Math.random() > 0.7) {
-            const raven = document.getElementById('raven');
-            raven.style.opacity = 1;
-            setTimeout(() => {
-                raven.style.opacity = 0;
-            }, 3000);
-        }
-    }, 15000);
+	        document.addEventListener('DOMContentLoaded', () => {
+	            const wantedCards = document.querySelectorAll('.wanted-card');
+	            wantedCards.forEach(card => {
+	                card.addEventListener('mouseenter', () => {
+	                    card.style.transform = 'translateY(-5px)';
+	                    card.style.boxShadow = '0 5px 15px rgba(139, 0, 0, 0.3)';
+	                });
+	                card.addEventListener('mouseleave', () => {
+	                    card.style.transform = '';
+	                    card.style.boxShadow = '';
+	                });
+	            });
+	        });
+	    
 });

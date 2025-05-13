@@ -3,7 +3,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Terminal boot sequence
     setTimeout(() => {
         document.getElementById('terminal-curtain').style.opacity = 0;
         setTimeout(() => {
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }, 4000);
 
-    // Navigation sound effects
     const navItems = document.querySelectorAll('.nav-item');
     const sounds = {
         creak: document.getElementById('creak'),
@@ -32,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Raven random appearance
 	
 	
 	
