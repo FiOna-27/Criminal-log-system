@@ -1,32 +1,33 @@
-package com.example.controllers;
+package com.example.Controllers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+import java.io.IOException;
 
-import com.example.utils.DBUtil;
+import com.example.Service.AddCriminalService;
 
-public class AddCriminalController {
-	
-	public static boolean addWanted(String Criminal_Name, String Charges, String Last_seen, String Criminal_info) {
+@WebServlet("/AddCriminalController")
+public class AddCriminalController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-        String sql = "INSERT INTO `most-wanted` (Criminal_name, Charges, Last_seen, Criminal_info) VALUES (?, ?, ?, ?)";
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String name = req.getParameter("name");
+        String charges = req.getParameter("charges");
+        String lastSeen = req.getParameter("lastSeen");
+        String description = req.getParameter("description");
 
-            stmt.setString(1, Criminal_Name);
-            stmt.setString(2, Charges);
-            stmt.setString(3, Last_seen);
-            stmt.setString(4, Criminal_info);
+        boolean success = AddCriminalService.addWanted(name, charges, lastSeen, description);
 
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        if (success) {
+            resp.sendRedirect("MostWantedController");
+        } else {
+        	 HttpSession session = req.getSession();
+             session.setAttribute("errorMessage", "Failed to add the criminal information. Please try again.");
+            resp.sendRedirect("error.jsp");
         }
     }
-
 }

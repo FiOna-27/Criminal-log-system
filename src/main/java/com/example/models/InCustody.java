@@ -15,17 +15,7 @@ public class InCustody implements Serializable {
     
     public InCustody() {
     }
-    
-    public InCustody(String name, String charges, String sentence, 
-                    String info, String behavior, String mentalState) {
-        this.name = name;
-        this.charges = charges;
-        this.sentence = sentence;
-        this.info = info;
-        this.behavior = behavior;
-        this.mentalState = mentalState;
-    }
-    
+     
     public InCustody(int id, String name, String charges, String sentence,
                     String info, String behavior, String mentalState) {
         this.id = id;

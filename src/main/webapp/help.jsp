@@ -5,13 +5,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Help Center</title>
+
+  <!-- Global eerie styles for the whole site -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/eerie.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/help.css">
+  
+  <!-- Page-specific spooky help center styles -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/help.css">
 </head>
 <body>
+  <!-- Main container for the help content -->
   <div class="help-container">
     <h1>Help Center</h1>
     
+    <!-- FAQ section: simple hardcoded answers -->
     <section class="faq-section">
       <h2>Frequently Asked Questions</h2>
 
@@ -36,6 +42,7 @@
       </div>
     </section>
 
+    <!-- Support contact form (posts to HelpServlet) -->
     <section class="support-section">
       <h2>Still need help?</h2>
       <p>If your issue wasn't addressed above, feel free to contact us using the form below.</p>

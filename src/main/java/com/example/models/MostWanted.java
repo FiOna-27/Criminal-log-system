@@ -10,13 +10,6 @@ public class MostWanted {
     public MostWanted() {
     }
     
-    public MostWanted(String name, String charges, String lastSeen, String info) {
-        this.name = name;
-        this.charges = charges;
-        this.lastSeen = lastSeen;
-        this.info = info;
-    }
-    
     public MostWanted(int id, String name, String charges, String lastSeen, String info) {
         this.id = id;
         this.name = name;

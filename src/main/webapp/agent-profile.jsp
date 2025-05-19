@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.example.models.Detective" %>
 <%
     Detective detective = (Detective) session.getAttribute("detective");
@@ -14,220 +15,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent Profile | Shadow Files</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/eerie.css">
-    <style>
-        body {
-            background-color: #000;
-            color: #ccc;
-            font-family: 'Courier New', monospace;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-
-        .profile-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .profile-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--blood-red);
-            padding-bottom: 1rem;
-            position: relative;
-        }
-
-        .profile-header::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 25%;
-            width: 50%;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--blood-red), transparent);
-        }
-
-        .glitch-title {
-            color: var(--blood-red);
-            font-size: 2.5rem;
-            position: relative;
-        }
-
-        .redacted {
-            background: #111;
-            color: transparent;
-            text-shadow: 0 0 8px rgba(139, 0, 0, 0.3);
-            padding: 0 0.5rem;
-            border-radius: 3px;
-        }
-
-        .clearance-badge {
-            background: rgba(10, 10, 10, 0.7);
-            border: 1px solid var(--blood-red);
-            padding: 0.5rem 1rem;
-            display: inline-block;
-            margin-top: 1rem;
-        }
-
-        .clearance-level, .clearance-code {
-            color: var(--blood-red);
-            font-weight: bold;
-        }
-
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        .profile-section {
-            background: rgba(10, 10, 10, 0.7);
-            border: 1px solid var(--cobweb);
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .section-title {
-            color: var(--blood-red);
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .identity-section {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 2rem;
-        }
-
-        .id-photo {
-            height: 250px;
-            background: #111;
-            border: 3px solid var(--blood-red);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .id-photo::before {
-            content: "CLASSIFIED";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--blood-red);
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .id-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .info-row {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed #333;
-        }
-
-        .info-label {
-            color: var(--blood-red);
-            font-weight: bold;
-            display: inline-block;
-            width: 120px;
-        }
-
-        .info-value {
-            color: #ccc;
-        }
-
-        .info-value.active {
-            color: #00ff00;
-            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-        }
-
-        .activity-log {
-            font-family: 'Courier New', monospace;
-        }
-
-        .log-entry {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed #333;
-        }
-
-        .log-entry.warning {
-            color: #ffcc00;
-        }
-
-        .log-entry.danger {
-            color: var(--blood-red);
-        }
-
-        .log-time {
-            color: #666;
-            margin-right: 1rem;
-        }
-
-        .log-location {
-            color: #666;
-            float: right;
-        }
-
-        .signout-fixed {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            color: var(--blood-red);
-            background: rgba(0, 0, 0, 0.6);
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--blood-red);
-            font-weight: bold;
-            text-decoration: none;
-            z-index: 1000;
-        }
-
-        .raven-image {
-            position: fixed;
-            top: 50px;
-            right: 50px;
-            width: 100px;
-            opacity: 0.8;
-            z-index: 0;
-        }
-
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                opacity: 1;
-            }
-            20%, 22%, 24%, 55% {
-                opacity: 0.5;
-            }
-        }
-
-        .flicker {
-            animation: flicker 3s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .blink {
-            animation: blink 1s infinite;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/agent-profile.css">
+    
 </head>
 <body>
-    <a href="LogoutServlet" class="signout-fixed">[SIGN OUT]</a>
-
-    <img src="${pageContext.request.contextPath}/assets/images/raven.png" id="raven" class="raven-image">
+    <!-- Sign Out Button -->
+    <a href="${pageContext.request.contextPath}/LogoutController" class="signout-fixed">[SIGN OUT]</a>
+    <img src="${pageContext.request.contextPath}/assets/images/raven.png" id="raven" class="raven-image" alt="Raven">
 
     <div class="profile-container">
+        <!-- Profile Header -->
         <div class="profile-header">
             <h1 class="glitch-title">AGENT <span class="redacted"><%= detective.getLastName() %></span> DOSSIER</h1>
             <div class="clearance-badge">
@@ -237,9 +34,14 @@
         </div>
 
         <div class="profile-grid">
+            <!-- Identity Section -->
             <div class="profile-section identity-section">
                 <h2 class="section-title"><span class="flicker">IDENTITY</span></h2>
-                <div class="id-photo"></div>
+                <div class="id-photo <%= detective.isHideImage() ? "classified" : "" %>">
+                    <c:if test="${not detective.hideImage and not empty detective.imageUrl}">
+                        <img src="${pageContext.request.contextPath}${detective.imageUrl}" alt="Detective Profile">
+                    </c:if>
+                </div>
                 <div class="id-info">
                     <div class="info-row">
                         <span class="info-label">NAME:</span>
@@ -257,9 +59,19 @@
                         <span class="info-label">SPECIALTY:</span>
                         <span class="info-value">PSYCHIC PHENOMENA</span>
                     </div>
+                    <!-- Image Update Form -->
+                    <form class="image-form" action="${pageContext.request.contextPath}/AgentProfileController" method="post" enctype="multipart/form-data">
+                        <input type="file" name="imageFile" accept="image/*" aria-label="Upload profile image">
+                        <label>
+                            <input type="checkbox" name="hideImage" <%= detective.isHideImage() ? "checked" : "" %>>
+                            Hide Image
+                        </label>
+                        <button type="submit">Update Image</button>
+                    </form>
                 </div>
             </div>
 
+            <!-- Activity Log Section -->
             <div class="profile-section full-width">
                 <h2 class="section-title"><span class="flicker">RECENT ACTIVITY</span></h2>
                 <div class="activity-log">
@@ -288,6 +100,7 @@
         </div>
     </div>
 
+    <!-- Raven Animation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const raven = document.getElementById('raven');

@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <a href="LogoutServlet" class="signout-fixed">[SIGN OUT]</a>
+    <a href="LogoutController" class="signout-fixed">[SIGN OUT]</a>
     
 
     <div class="home-container">
@@ -65,7 +65,7 @@
 
         <nav class="main-nav">
             <div class="nav-item" data-sound="creak">
-                <a href="${pageContext.request.contextPath}/MostWantedServlet" class="blood-link">
+                <a href="${pageContext.request.contextPath}/MostWantedController" class="blood-link">
                     MOST WANTED DATABASE
                     <span class="nav-icon">🕵️</span>
                     <span class="nav-text">ACTIVE CASES</span>
@@ -74,7 +74,7 @@
             </div>
             
             <div class="nav-item" data-sound="static">
-                <a href="${pageContext.request.contextPath}/InCustodyServlet" class="blood-link">
+                <a href="${pageContext.request.contextPath}/InCustodyController" class="blood-link">
                     <span class="nav-icon">📁</span>
                     <span class="nav-text">Prisoner Archive</span>
                     <span class="nav-glitch">RESTRICTED</span>

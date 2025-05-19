@@ -1,34 +1,42 @@
-package com.example.controllers;
+package com.example.Controllers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-import com.example.utils.DBUtil;
+import java.io.IOException;
 
-public class AddInmateController {
+import com.example.Service.AddInmateService;
 
-    public static boolean addInmate(String name, String charges, String sentence, String info, String behavior, String mentalState) {
+@WebServlet("/AddInmateController")
+@MultipartConfig
+public class AddInmateController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-        String sql = "INSERT INTO `in-custody` (Prisioner_name, Prisioner_charges, Prisioner_sentence, Prisioner_info, Prisioner_behaviour, Prisioner_mentalstate) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String name = req.getParameter("name");
+        String charges = req.getParameter("charges");
+        String sentence = req.getParameter("sentence");
+        String info = req.getParameter("info");
+        String behavior = req.getParameter("behavior");
+        String mentalState = req.getParameter("mentalState");
 
-            stmt.setString(1, name);
-            stmt.setString(2, charges);
-            stmt.setString(3, sentence);
-            stmt.setString(4, info);
-            stmt.setString(5, behavior);
-            stmt.setString(6, mentalState);
+        boolean success = AddInmateService.addInmate(name, charges, sentence, info, behavior, mentalState);
 
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        if (success) {
+        	
+            resp.sendRedirect("AddInmateController");
+        } else {
+        	HttpSession session = req.getSession();
+            session.setAttribute("errorMessage", "Failed to add the inmate information. Please try again.");
+            resp.sendRedirect("AddInmateController");
         }
     }
 }

@@ -315,3 +315,27 @@ a.blood-link:hover::before {
     color: var(--blood-red);
     text-decoration: underline;
 }
+
+.error-message {
+    background-color: rgba(255, 0, 0, 0.15);
+    color: crimson;
+    border-left: 4px solid darkred;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: italic;
+    text-shadow: 1px 1px black;
+    animation: fadeInCursed 1.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInCursed {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

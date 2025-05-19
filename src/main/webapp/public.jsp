@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Define page metadata and stylesheets -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National Criminal Records Bureau</title>
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
 </head>
 <body>
+    <!-- Government banner with agency information -->
     <div class="government-banner">
         <div class="banner-content">
             <img src="${pageContext.request.contextPath}/assets/images/government-logo.png" alt="Department Logo" class="agency-logo">
@@ -27,17 +29,19 @@
         </div>
     </div>
 
+    <!-- Navigation menu -->
     <nav class="gov-nav">
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#wanted">Most Wanted</a></li>
             <li><a href="#statistics">Crime Statistics</a></li>
-            <li><a href="#resources">Public Resources</a></li>
-            <li><a href="#about">About NCRB</a></li>
+            <li><a href="help.jsp">Public Help</a></li>
+            <li><a href="contact.jsp">About NCRB</a></li>
         </ul>
     </nav>
 
     <main class="public-container">
+        <!-- Most wanted criminals section -->
         <section class="wanted-section" id="wanted">
             <h2>Most Wanted Criminals</h2>
             <div class="wanted-grid">
@@ -57,6 +61,7 @@
             </div>
         </section>
 
+        <!-- Public alert notice -->
         <section class="notice-section">
             <div class="notice-box">
                 <h3><img src="${pageContext.request.contextPath}/assets/images/warning-icon.png" alt="Warning"> Public Alert</h3>
@@ -65,6 +70,7 @@
             </div>
         </section>
 
+        <!-- Crime statistics section -->
         <section class="stats-section" id="statistics">
             <h2>National Crime Statistics</h2>
             <div class="stats-grid">
@@ -84,6 +90,7 @@
         </section>
     </main>
 
+    <!-- Page footer with contact and links -->
     <footer class="gov-footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -106,6 +113,7 @@
         </div>
     </footer>
 
+    <!-- Watermark for branding -->
     <div class="shadow-watermark">
         <img src="${pageContext.request.contextPath}/assets/images/shadow-files-watermark.png" alt="Shadow Files">
     </div>

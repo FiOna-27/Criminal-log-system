@@ -1,34 +1,65 @@
-package com.example.controllers;
+package com.example.Controllers;
 
-import com.example.utils.DBUtil;
-import com.example.utils.PasswordUtil;
+import com.example.Service.AddUserService;
+import com.example.utils.ValidationUtil;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.IOException;
 
-public class AddUserController {
+@WebServlet("/AddDetectiveServlet")
+public class AddUserController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-    public static boolean addUser(String firstName, String lastName, String number, String email, String password) {
-        String hashedPassword = PasswordUtil.hashPassword(password);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        String sql = "INSERT INTO detective (First_name, Last_name, Number, Email, Password) VALUES (?, ?, ?, ?, ?)";
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String number = req.getParameter("number");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        // Validate email format
+        if (!ValidationUtil.isValidEmail(email)) {
+            req.setAttribute("error", "Invalid email format.");
+            req.getRequestDispatcher("addUser.jsp").forward(req, resp);
+            return;
+        }
 
-            stmt.setString(1, firstName);
-            stmt.setString(2, lastName);
-            stmt.setString(3, number);
-            stmt.setString(4, email);
-            stmt.setString(5, hashedPassword);
+        // Validate email uniqueness
+        if (!ValidationUtil.isEmailUnique(email)) {
+            req.setAttribute("error", "Email already in use.");
+            req.getRequestDispatcher("addUser.jsp").forward(req, resp);
+            return;
+        }
 
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+        // Validate phone number uniqueness
+        if (!ValidationUtil.isPhoneUnique(number)) {
+            req.setAttribute("error", "Phone number already in use.");
+            req.getRequestDispatcher("addUser.jsp").forward(req, resp);
+            return;
+        }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        // Validate password strength
+        if (!ValidationUtil.isValidPassword(password)) {
+            req.setAttribute("error", "Password must be at least 8 characters long, include an uppercase letter, a number, and a special character.");
+            req.getRequestDispatcher("addUser.jsp").forward(req, resp);
+            return;
+        }
+
+        // All validations passed, go ahead and register
+        boolean success = AddUserService.addUser(firstName, lastName, number, email, password);
+
+        if (success) {
+            resp.sendRedirect("login.jsp");
+        } else {
+            req.setAttribute("error", "Something went wrong. Please try again.");
+            req.getRequestDispatcher("addUser.jsp").forward(req, resp);
         }
     }
 }

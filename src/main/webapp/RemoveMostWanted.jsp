@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.example.models.Detective" %>
+
+<!-- Check for authenticated detective with sufficient access level --%>
 <%
     Detective detective = (Detective) session.getAttribute("detective");
-    if (detective == null) {
+    if (detective == null || detective.getLevel() < 2) {
+        request.setAttribute("error", "Unauthorized: Insufficient access level");
         response.sendRedirect("login.jsp");
         return;
     }
@@ -10,206 +13,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Define page metadata and stylesheets -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terminate Record | Shadow Files</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/eerie.css">
-    <style>
-        body {
-            background-color: #000;
-            color: #ccc;
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .classified-container {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: rgba(20, 0, 0, 0.7);
-            border: 1px solid var(--blood-red);
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .classified-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--blood-red), transparent);
-        }
-
-        .classified-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed var(--blood-red);
-        }
-
-        .classified-header h1 {
-            color: var(--blood-red);
-            font-size: 2rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-        }
-
-        .classified-header h1::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 30%;
-            width: 40%;
-            height: 2px;
-            background: var(--blood-red);
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.8rem;
-            color: var(--blood-red);
-            font-weight: bold;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-        }
-
-        input {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--cobweb);
-            color: #ccc;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--blood-red);
-            box-shadow: 0 0 10px rgba(139, 0, 0, 0.7);
-        }
-
-        .terminate-button {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            background: rgba(139, 0, 0, 0.3);
-            border: 1px solid var(--blood-red);
-            color: #ccc;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-top: 2rem;
-        }
-
-        .terminate-button:hover {
-            background: rgba(139, 0, 0, 0.5);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
-        }
-
-        .terminate-button::before {
-            content: "CONFIRM TERMINATION";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.9);
-            color: var(--blood-red);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .terminate-button:hover::before {
-            opacity: 1;
-        }
-
-        .signout-fixed {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            color: var(--blood-red);
-            background: rgba(0, 0, 0, 0.6);
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--blood-red);
-            font-weight: bold;
-            text-decoration: none;
-            z-index: 1000;
-        }
-
-        .security-warning {
-            color: var(--blood-red);
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            animation: flicker 1.5s infinite;
-            border-top: 1px dashed var(--blood-red);
-            padding-top: 1rem;
-        }
-
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                opacity: 1;
-                text-shadow: 0 0 5px rgba(139, 0, 0, 0.7);
-            }
-            20%, 22%, 24%, 55% {
-                opacity: 0.7;
-                text-shadow: none;
-            }
-        }
-
-        .blood-drips {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('${pageContext.request.contextPath}/assets/images/blood-drips.png');
-            background-repeat: repeat;
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: -1;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/RemoveMostWanted.css">
 </head>
 <body>
     <div class="blood-drips"></div>
     
-    <!-- SIGN OUT BUTTON -->
-    <a href="LogoutServlet" class="signout-fixed">[SIGN OUT]</a>
+    <!-- Sign out link -->
+    <a href="LogoutController" class="signout-fixed">[SIGN OUT]</a>
 
     <div class="classified-container">
+        <!-- Page header with detective information -->
         <div class="classified-header">
             <h1>TERMINATE <span class="glitch" data-text="RECORD">RECORD</span></h1>
             <p>Detective: <span class="redacted"><%= detective.getLastName() %></span></p>
         </div>
 
-        <form action="${pageContext.request.contextPath}/RemoveMostWantedServlet" method="post">
+        <!-- Form to terminate a criminal record -->
+        <form action="${pageContext.request.contextPath}/RemoveMostWantedController" method="post">
             <div class="form-group">
                 <label for="name">TARGET IDENTIFICATION:</label>
                 <input type="text" id="name" name="name" required 
@@ -225,13 +50,13 @@
         </form>
     </div>
 
+    <!-- Client-side JavaScript for form interactions -->
     <script>
         const form = document.querySelector('form');
         form.addEventListener('submit', function(e) {
             const button = document.querySelector('.terminate-button');
             button.textContent = "TERMINATING...";
             button.style.backgroundColor = "rgba(139, 0, 0, 0.7)";
-            
         });
 
         const input = document.querySelector('input');

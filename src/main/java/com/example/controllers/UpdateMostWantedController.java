@@ -1,31 +1,34 @@
-package com.example.controllers;
+package com.example.Controllers;
 
-import com.example.utils.DBUtil;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.IOException;
 
-public class UpdateMostWantedController {
+import com.example.Service.UpdateMostWantedService;
 
-    public static boolean updateCriminal(String name, String charges, String lastSeen, String description) {
+@WebServlet("/UpdateMostWantedController")
+public class UpdateMostWantedController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-        String sql = "UPDATE `most-wanted` SET Charges = ?, Last_seen = ?, Criminal_info = ? WHERE Criminal_name = ?";
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String name = req.getParameter("name");
+        String charges = req.getParameter("charges");
+        String lastSeen = req.getParameter("lastSeen");
+        String description = req.getParameter("description");
 
-            stmt.setString(1, charges);
-            stmt.setString(2, lastSeen);
-            stmt.setString(3, description);
-            stmt.setString(4, name);
+        boolean success = UpdateMostWantedService.updateCriminal(name, charges, lastSeen, description);
 
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        if (success) {
+            resp.sendRedirect("MostWantedController");
+        } else {
+        	 HttpSession session = req.getSession();
+             session.setAttribute("errorMessage", "Failed to update the criminal information. Please try again.");
+            resp.sendRedirect("MostWantedController");
         }
     }
 }
